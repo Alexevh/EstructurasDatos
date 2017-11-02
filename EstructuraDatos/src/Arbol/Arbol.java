@@ -209,5 +209,206 @@ public class Arbol {
         }
 
     }
+    
+    /* Metodo axuliar para buscar un elemtno con una firma*/
+      private NodoArbol buscar(int elemento) {
+        return buscar(raiz, elemento);
+    }
+    
+    /* Buscar un nodo en el arbol*/
+    public NodoArbol buscar(NodoArbol a, int dato) {
 
+        /* Casos base, si el nodo es null devolvemos null , pero si el nodo
+        contiene el dato que estamos buscando devolvemos el dato */
+        if (a == null) {
+            return a;
+        }
+        if (a.getDato()==dato) {
+            return a;
+
+        }
+
+        /* Recursiva 
+        La busqueda es sencilla, Creamos un nodoarbol llamado retorno y le 
+        asignamos el resultado de buscar dandole el nodoizquierdo como primer
+        paramtero y el dato a buscar como el segundo. Si es null hacemos un return
+        de la misma funcion pero con el derecho.
+        
+        Por ejemplo, tenemos que buscar el 7 como elemento, en la raiz tenemos 
+        el 10.
+        
+        Lo primero que va a hacer es saber si la raiz es null, como no lo es
+        se fija si la raiz contiene el dato, como la raiz tiene el dato 10 y
+        nosotros buscamos el 7, vamos a entrar en la recursiva.
+        
+        Noodoarbol nodo = buscar(10.izquierdo, 7) en A que valia 10 vamos a
+        buscar a la izquierda y se va a reetir el proceso, imaginemos que esta
+        el numero 9, eso significa que a.izquierda no es null pero tampoco el
+        numero que estoy buscando asi que se repite el proceso. Imaginemos que
+        el nodo que contiene el 9 tiene un nodo a la izquierda con el 7 en ese caso
+        el nodo al tener el valor es retornado ya que se llego a un paso base.
+        
+        Ejemplo 2: Imaginemos que tenemos el mismo arbol, pero nos pasan el dato 15
+        El algoritmo comienza en la raiz que tiene un 10, luego como compara que
+        no es el dato lopasa ala recursiva.
+        
+        Como el numero no va a estar la izquierda, el algoritmo lo busca igual
+        hasta que el retrno sea null, si el retorno es null enonces lo busca en la
+        derecha para lo cual hace lo mismo que a la izquierda
+        
+        */
+        NodoArbol retorno = buscar(a.getNodoIzq(), dato);
+        if (retorno == null) {
+            return buscar(a.getNodoDer(), dato);
+        } else {
+            return retorno;
+        }
+
+    }
+    
+    /* Conocer la cantidad de hojas de un arbol */
+    public int cantHojas()
+    {
+        return cantHojasRaiz(raiz);
+    }
+    
+    
+    /* El metodo va a contabilizar la cantidad de hojas a partir de un nodo
+    normalmente lo vamos a llamar desde la raiz
+    
+    Si el nodo es null devolvemos cero, si el nodo no es null pero su nodo izq
+    si es null retornamos 1+ el resultado del mismo metodo para el nododerecho
+    en cambio si en nodoizq no es null retornamos la recursiva del nodoizquirdo + la
+    recursiva del derecho
+    
+    Ejemplo
+    
+    Ejecutamos el procedimiento en la raiz que no es null y tiene un 10, el
+    metodo se fija, el nodoiz es nulo? en este caso no, y tiene un valor de 9
+    entonces como no es null va a ejecutar return recursiva(nodo.izq) + la
+    recursiva(nodo.der)
+    
+    Imagineos que el nodo que tiene valor de 9 no tiene un izquierdo pero si 
+    un derecho, en esa segunda ejecucion la primera parte nos devuelve 1+ el
+    resultado de la recursiva para el derecho.
+    
+    El derecho tiene un valor de 11, pero no tiene hijos, nos devuelve 1
+    
+    
+    */
+    public int cantHojasRaiz(NodoArbol nodo)
+    {
+        if (nodo==null)
+        {
+            return 0;
+        } else if(nodo.getNodoIzq()==null)
+        {
+            return 1+cantHojasRaiz(nodo.getNodoDer());
+        } else {
+            return cantHojasRaiz(nodo.getNodoIzq()) + cantHojasRaiz(nodo.getNodoDer());
+        }
+        
+    }
+    
+    /* Obtener la altura de un arbol */
+    public int altura()
+    {
+        return altura(raiz);
+    }
+    
+    
+    /* La recursiva funciona asi >
+    
+    El caso base es si el nodo == null devolvemos -1
+    
+    IMaginemos el arbol tiene el nodo raiz con un 10, se llama la funcion, el nodo
+    no es null.
+    
+    La primera pasada se guardan dos enteros izq y der, si ambos tienen datos
+    ninguno da -1 por lo que se repite la funcion.
+    
+    Imaginemos que el 10 tenia dos hijos, 9 y 11, esa pasada repite la funcion
+    el 9 tiene un hijo 8 y el 11 no tiene ninguno.
+    
+    
+    
+    En la segunda pasada altura de derecha va a ser -1por lo que izquirda va a 
+    ser mayor por lo que devolvemos izq+1
+    
+    La recursiva altura(nodoizq) y derecho se ejecuta en el else hasta que
+    encuentra el null.
+ 
+    
+    */
+    public int altura(NodoArbol nodo)
+    {
+        if (nodo==null)
+        {
+            return -1;
+        } else {
+            int altIzq = altura(nodo.getNodoIzq());
+            int altDer = altura(nodo.getNodoDer());
+            
+            if (altIzq > altDer)
+            {
+                return altIzq+1;
+            } else {
+                return altDer +1;
+            }
+        }
+    }
+    
+  
+    /* Metodo para eliminar un elemento
+    
+    Primero buscamos el nodoA borrar con el metodo que hicimos antes, luego 
+    buscamos el nodo padre
+    
+    Si el nodo aPadre.izq==nodoAborrar entonces, al nodoPadre le seteamos como
+    nodo izquierdo el nodo derecho del elemento aBOrrar
+    
+    Si el nodo izquirdo del padre no es el nodoAborrar
+    
+    a) Guardamos dos nodos en variables, el hnoanterio que es el izq del aPadre
+    y como nodo auxiliar guardamos el mismo nodo o sea APdre.izq
+    
+    Mientras que aux sea distinto al nodo aBorrar, ponemos como hnoANterior a
+    el valor actual de aux y luego seteamos aux = hnoACtual.derecho.
+    
+    Cuando salimos del bucle es por que aux==aBOrrar, entonces ponemos a hnoANterio
+    como nodo derecho el aBorrar.nodoDerecho
+    
+    
+    */
+     public void borrarElemento(int elem)
+    {
+        NodoArbol aBorrar = buscar(elem);
+        
+        NodoArbol aPadre = buscar(raiz, elem);
+        
+        if (aPadre.getNodoIzq()==aBorrar) //Es primer hijo
+        {
+            aPadre.setNodoIzq(aBorrar.getNodoDer());
+        } else {
+            NodoArbol hnoAnterior = aPadre.getNodoIzq();
+            NodoArbol aux = aPadre.getNodoIzq();
+            
+            while (aux!=aBorrar)
+            {
+                hnoAnterior=aux;
+                aux = aux.getNodoDer();
+            }
+            
+            hnoAnterior.setNodoDer(aBorrar.getNodoDer());
+        }
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
 }
