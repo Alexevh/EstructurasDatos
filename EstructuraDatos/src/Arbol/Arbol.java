@@ -360,55 +360,123 @@ public class Arbol {
     
   
     /* Metodo para eliminar un elemento
-    
-    Primero buscamos el nodoA borrar con el metodo que hicimos antes, luego 
-    buscamos el nodo padre
-    
-    Si el nodo aPadre.izq==nodoAborrar entonces, al nodoPadre le seteamos como
-    nodo izquierdo el nodo derecho del elemento aBOrrar
-    
-    Si el nodo izquirdo del padre no es el nodoAborrar
-    
-    a) Guardamos dos nodos en variables, el hnoanterio que es el izq del aPadre
-    y como nodo auxiliar guardamos el mismo nodo o sea APdre.izq
-    
-    Mientras que aux sea distinto al nodo aBorrar, ponemos como hnoANterior a
-    el valor actual de aux y luego seteamos aux = hnoACtual.derecho.
-    
-    Cuando salimos del bucle es por que aux==aBOrrar, entonces ponemos a hnoANterio
-    como nodo derecho el aBorrar.nodoDerecho
-    
+   Usamos dos metodos, uno para encontrar el elemtno a borra
     
     */
-     public void borrarElemento(int elem)
+    
+         public boolean borrarElementoV2(int elem)
     {
-        NodoArbol aBorrar = buscar(elem);
-        
-        NodoArbol aPadre = buscar(raiz, elem);
-        
-        if (aPadre.getNodoIzq()==aBorrar) //Es primer hijo
-        {
-            aPadre.setNodoIzq(aBorrar.getNodoDer());
-        } else {
-            NodoArbol hnoAnterior = aPadre.getNodoIzq();
-            NodoArbol aux = aPadre.getNodoIzq();
-            
-            while (aux!=aBorrar)
-            {
-                hnoAnterior=aux;
-                aux = aux.getNodoDer();
-            }
-            
-            hnoAnterior.setNodoDer(aBorrar.getNodoDer());
-        }
-        
-        
-        
-        
+    	NodoArbol auxiliar = raiz;
+    	NodoArbol padre = raiz;
+    	
+    	boolean esHijoIzq = true;
+    	
+    	while (auxiliar.getDato()!=elem)
+    	{
+    		padre = auxiliar;
+    		if (elem < auxiliar.getDato())
+    		{
+    			esHijoIzq = true;
+    			auxiliar=auxiliar.getNodoIzq();
+    		} else {
+    			esHijoIzq = false;
+    			auxiliar=auxiliar.getNodoDer();
+    		}
+    		
+    		if(auxiliar==null)
+    		{
+    			return false;
+    		}
+    	}
+    	
+    	/* El nodo es Hoja o unico nodo */
+    	if (auxiliar.getNodoIzq()==null && auxiliar.getNodoDer()==null)
+    	{
+    		if(auxiliar.getDato()==raiz.getDato())
+    		{
+    			raiz=null;
+    		} else if (esHijoIzq)
+    		{
+    			padre.setNodoIzq(null);
+    		} else {
+    			padre.setNodoDer(null);
+    		}
+    	} else if(auxiliar.getNodoDer()==null)
+    	{
+    		if(auxiliar==raiz)
+    		{
+    			raiz=auxiliar.getNodoIzq();
+    		} else if (esHijoIzq)
+    		{
+    			padre.setNodoIzq(auxiliar.getNodoIzq());
+    		} else 
+    		{
+    			padre.setNodoDer(auxiliar.getNodoIzq());
+    		}
+    	} else if (auxiliar.getNodoIzq()==null)
+    	{
+    		
+    		if(auxiliar==raiz)
+    		{
+    			raiz=auxiliar.getNodoDer();
+    		} else if (esHijoIzq)
+    		{
+    			padre.setNodoIzq(auxiliar.getNodoDer());
+    		} else 
+    		{
+    			padre.setNodoDer(auxiliar.getNodoDer());
+    		}
+    		
+    		
+    		
+    	} else {
+    		NodoArbol reemplazo = obtenerNodoReemplazo(auxiliar);
+    		if (auxiliar==raiz)
+    		{
+    			raiz=reemplazo;
+    		} else if(esHijoIzq)
+    		{
+    			padre.setNodoIzq(reemplazo);
+    		} else 
+    		{
+    			padre.setNodoDer(reemplazo);
+    		}
+    		
+    		reemplazo.setNodoIzq(auxiliar.getNodoIzq());
+    	}
+    	
+    	
+    	
+    	return true;
     }
     
     
-    
+    public NodoArbol obtenerNodoReemplazo(NodoArbol nodo)
+    {
+    	NodoArbol reemplazarPadre = nodo;
+    	NodoArbol reemplazo = nodo;
+    	NodoArbol aux = nodo.getNodoDer();
+    	
+    	while(aux!=null)
+    	{
+    		reemplazarPadre = reemplazo;
+    		reemplazo = aux;
+    		aux = aux.getNodoIzq();
+    	}
+    	
+    	if (reemplazo!=nodo.getNodoDer())
+    	{
+    		reemplazarPadre.setNodoIzq(reemplazo.getNodoDer());
+    		reemplazo.setNodoDer(nodo.getNodoDer());
+    		
+    	}
+    	
+    	
+    	
+    	
+    	
+    	return reemplazo;
+    }
     
     
 }
