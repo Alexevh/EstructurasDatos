@@ -3,6 +3,8 @@
  */
 package Cola;
 
+import Dominio.Punto;
+
 /**
  *
  * @author alex
@@ -26,7 +28,7 @@ public class Cola {
         return inicio==null;
     }
     
-    public void insertar(int ele)
+    public void insertar(Punto ele)
     {
         NodoCola nuevo = new NodoCola(ele);
         if (estaVacia())

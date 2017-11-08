@@ -21,6 +21,41 @@ public class NodoListaAdy {
 	public NodoListaAdy ant;
 	public NodoListaAdy sig;
 
+    public int getDestino() {
+        return destino;
+    }
+
+    public void setDestino(int destino) {
+        this.destino = destino;
+    }
+
+    public int getPeso() {
+        return peso;
+    }
+
+    public void setPeso(int peso) {
+        this.peso = peso;
+    }
+
+    public NodoListaAdy getAnt() {
+        return ant;
+    }
+
+    public void setAnt(NodoListaAdy ant) {
+        this.ant = ant;
+    }
+
+    public NodoListaAdy getSig() {
+        return sig;
+    }
+
+    public void setSig(NodoListaAdy sig) {
+        this.sig = sig;
+    }
+
+        
+        
+        
         /* Si creamos un nodo vacio le ponemos estos valores por defecto*/
 	public NodoListaAdy() {
 		this.destino = -1;

@@ -5,16 +5,18 @@
  */
 package Cola;
 
+import Dominio.Punto;
+
 /**
  *
  * @author alex
  */
 public class NodoCola {
     
-    int dato;
+    Punto dato;
     NodoCola siguiente;
     
-    public NodoCola(int i)
+    public NodoCola(Punto i)
     {
         this.dato=i;
         this.siguiente =null;

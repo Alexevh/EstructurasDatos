@@ -6,6 +6,11 @@
 package Grafo;
 
 import Dominio.Punto;
+import Pila.NodoPila;
+import Pila.Pila;
+import java.util.Iterator;
+import java.io.*;
+import java.util.*;
 
 /**
  *
@@ -335,16 +340,16 @@ public class GrafoLista {
         int objetivo = -1;
         /* Obtengo el punto qye quiero comparar*/
         Punto dest = buscarPunto(destino);
-        
+
         /* Vamos a recorrer el vector de puntos para buscar el camino minimo
         
-        */
+         */
         for (int k = 0; k < cantidadMaxima; k++) {
-            
+
             /* Voy a buscarpor cada posicion en el vector si hay uno con
             camino minimo*/
             int v = buscarPuntoSinVisitarConCostoMinimo(costos, visitados);
-            
+
             /* Si v es mayor o igual a cero es que existe el nodo, de lo contrario
             el metodo buscarpuntossin visitar me hubiera devuelto -1
             EN ese caso lo primero que hacemos es actualizar la tabla devisitados
@@ -357,7 +362,7 @@ public class GrafoLista {
             
             
             
-            */
+             */
             if (v >= 0) {
                 visitados[v] = true;
 
@@ -366,7 +371,7 @@ public class GrafoLista {
                     break;
 
                 }
-                
+
                 /* Si no encontre el objetivo sigo con el metodo
                 Obtengo un nodo yle asigno el valor del nodo que se encuentra
                 en la posocion v del vector de listas de adyacencias.inicio
@@ -383,8 +388,7 @@ public class GrafoLista {
                 4. Luego hago w = w.sig para pararme en el siguiente nodo y hacer
                 el mismo calculo a ver si es una mejor ruta
                 
-                */
-                
+                 */
                 NodoListaAdy w = listaAdyacencias[v].inicio;
                 while (w != null) {
                     if (!visitados[w.destino] && w.peso + costos[v] < costos[w.destino]) {
@@ -411,7 +415,7 @@ public class GrafoLista {
     corto, en ese caso actualizo costoMIn con el valor que encontre y pongo el
     indicePunto (indice en el vector de puntos) el valor de i, luego de toda
     la recorrida devuelvo el indice
-    */
+     */
     public int buscarPuntoSinVisitarConCostoMinimo(int[] costos, boolean[] visitados) {
         int costoMin = Integer.MAX_VALUE;
         int indicePunto = -1;
@@ -430,7 +434,7 @@ public class GrafoLista {
     Primero obtengo los indices en el vecor de puntos de A y B
     luego los paso al metodo sondayacentes para saber si lo son
     
-    */
+     */
     public boolean sonAdyacentes(Punto puntoA, Punto puntoB) {
         int a = buscarIndice(puntoA);
         int b = buscarIndice(puntoB);
@@ -440,9 +444,74 @@ public class GrafoLista {
     /*
     Llamo al metodo pertenece parado en la posoiocn a del vector de listas de
     adyacencia, pregunto si pertenece b
-    */
+     */
     public boolean sonAdyacentes(int a, int b) {
         return this.listaAdyacencias[a].pertenece(b);
     }
 
+    public void buscarDFS(Punto p) {
+
+        int resultado[] = new int[puntos.length];
+
+        /* Obtengo una pila vacia */
+        Pila pila = new Pila();
+
+        /* Meter el primer nodo en la pila */
+        NodoPila nodo = new NodoPila(puntos[buscarIndice(p)]);
+        //NodoPila nodo = new NodoPila(puntos[2]);
+        pila.push(nodo);
+
+        while (pila.estaVacia() == false) {
+            Punto puntoVisitado = pila.cima().getDato();
+            pila.sacar();
+
+            if (puntoVisitado.isVisitado() == false) {
+                puntoVisitado.setVisitado(true);
+                System.out.println("Visitamos el punto :" + puntoVisitado.getNombre());
+
+                /* Adjunto a la pila los nodos adyacente del nodo tomado */
+                for (int i = 1; i < this.listaAdyacencias[buscarIndice(puntoVisitado)].getCantidad(); i++) {
+
+                    /* Obtengo el punto por el indice de la lista */
+                    Punto nuevoPunto = buscarPunto(i);
+                    System.out.println("Adyacente -->" + nuevoPunto.getNombre());
+                    pila.push(new NodoPila(nuevoPunto));
+
+                }
+
+            }
+        }
+
+    }
+
+    public void buscarDFS2(Punto p) {
+
+        System.out.println(p.getNombre());
+        ListaAdy lista = this.listaAdyacencias[buscarIndice(p)];
+        
+        
+        for (int i=1; i<lista.getCantidad();i++)
+        {
+            /* Esto da NULL tengo que poder encontrar por cada lugar de 
+            la lista la posicion del nodo correspondiente, traerlo y luego
+            poder buscar el Punto
+            */
+            NodoListaAdy nodol = lista.buscarNodo(i);
+            
+            Punto p2 = buscarPunto(nodol.getDestino());
+            if (p2!=null && p2.isVisitado()==false)
+            {
+                buscarDFS2(p2);
+                p2.setVisitado(true);
+            }
+            
+        }
+        
+    
+        
+    }
+
+  
+
+    
 }
