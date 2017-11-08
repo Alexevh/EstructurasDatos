@@ -44,7 +44,7 @@ public class Grafos {
        grafo.agregarTramo(p4, p6, 104, true);
        grafo.agregarTramo(p2, p3, 105, true);
        
-       grafo.buscarDFS(p1);
+       grafo.buscarDFS2(p4);
 
         
     }

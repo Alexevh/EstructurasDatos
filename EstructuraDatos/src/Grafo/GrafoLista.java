@@ -489,29 +489,25 @@ public class GrafoLista {
         System.out.println(p.getNombre());
         ListaAdy lista = this.listaAdyacencias[buscarIndice(p)];
         
+        /* Recorro la lista de nodos desde el inicio */
+        NodoListaAdy nodo = lista.inicio;
         
-        for (int i=1; i<lista.getCantidad();i++)
+        while(nodo!=null)
         {
-            /* Esto da NULL tengo que poder encontrar por cada lugar de 
-            la lista la posicion del nodo correspondiente, traerlo y luego
-            poder buscar el Punto
-            */
-            NodoListaAdy nodol = lista.buscarNodo(i);
-            
-            Punto p2 = buscarPunto(nodol.getDestino());
-            if (p2!=null && p2.isVisitado()==false)
+             Punto p2 = puntos[nodo.destino];
+             
+              if (p2!=null && p2.isVisitado()==false)
             {
                 buscarDFS2(p2);
                 p2.setVisitado(true);
             }
-            
+              
+              nodo= nodo.sig;
         }
         
-    
         
-    }
-
-  
-
+      
+            
+        }
     
 }
