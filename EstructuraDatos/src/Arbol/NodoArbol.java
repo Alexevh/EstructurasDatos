@@ -10,7 +10,7 @@ package Arbol;
 public class NodoArbol {
     
     
-      private int dato;
+    private int dato;
     
     private NodoArbol nodoIzq;
     

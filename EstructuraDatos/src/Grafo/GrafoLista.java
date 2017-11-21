@@ -5,6 +5,8 @@
  */
 package Grafo;
 
+import Cola.Cola;
+import Cola.NodoCola;
 import Dominio.Punto;
 import Pila.NodoPila;
 import Pila.Pila;
@@ -449,6 +451,7 @@ public class GrafoLista {
         return this.listaAdyacencias[a].pertenece(b);
     }
 
+    /* Metodo iterativo NO FUNCIONA BIEN hay que correjirlo*/
     public void buscarDFS(Punto p) {
 
         int resultado[] = new int[puntos.length];
@@ -484,6 +487,7 @@ public class GrafoLista {
 
     }
 
+    /* Metodo rcursivo , funciona OK*/
     public void buscarDFS2(Punto p) {
 
         System.out.println(p.getNombre());
@@ -510,4 +514,6 @@ public class GrafoLista {
             
         }
     
+    
+   
 }

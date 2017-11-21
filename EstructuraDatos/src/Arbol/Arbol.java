@@ -6,6 +6,28 @@ package Arbol;
 /**
  *
  * @author Alexev
+ * 
+ * 
+ * Este es un arbol ABB o arbol binario de busqueda, voy a implementar la mayor
+ * cantidad de metodos posibles tratando de que sea lo mas generico y reutilizable
+ * 
+ * Lista de metodos:
+ * 
+ * 1. Insertar (usa la 2)
+ * 2. InsertarElemento - Inserta un eleento en el arbol
+ * 3. Pertenece - saber si un elemento esta en el arbol
+ * 4. Listar ascendente
+ * 5. BorrarMinimo
+ * 6. Buscar
+ * 7. CantidadHojas
+ * 8. Altura
+ * 9. Borrar Elementos
+ * 10. CantidadNodos
+ * 11. TodosPares - saber si todos los elementos del arbol son pares
+ * 12. soniguales - saber si dado dos arboles son iguales
+ * 13. Clonar arbol
+ * 14. Esqeuilibrado - saber si un arbol esta equilibrado
+ * 
  */
 public class Arbol {
 
@@ -167,7 +189,7 @@ public class Arbol {
     }
 
     /* Vamos a borrar el nodo con el minimo valor*/
-    private void borrarMinimo() {
+    public void borrarMinimo() {
         raiz = eliminarMin(raiz);
     }
 
@@ -478,5 +500,119 @@ public class Arbol {
     	return reemplazo;
     }
     
+    /* Este metodo me va a contar los nodos del arbol , para ello voy a usar un
+    metodo complementario mas general*/
+    public int cantidadNodos()
+    {
+        return cantNodos(raiz);
+    }
     
+    /* Este metodo que estoy usando para conat los nodos del arbol me sirve 
+    tambien para contar todos losnodos de un subarbol dado un nodo raiz*/
+    public int cantNodos(NodoArbol nodo)
+    {
+        /*Inicializo un contador*/
+        int cont = 0;
+        
+        /* Si el nodo es valido vamos a recorrer el arbol que sale a partir de el*/
+        if (nodo!=null)
+        {
+            cont+= cantNodos(nodo.getNodoIzq());
+            cont++; //Sumo un nodo
+            cont += cantNodos(nodo.getNodoDer());
+        }
+        
+        
+        /*Devuelvo el resultado*/
+        return cont;
+    }
+    
+    /* Me devuelve el peso del arbol*/
+    public boolean todosPares()
+    {
+        return todosPares(raiz);
+    }
+    
+    public boolean todosPares(NodoArbol nodo)
+    {
+        if (nodo==null)
+        {
+            return true;
+        } else if (nodo.getDato()%2==0)
+        {
+            return todosPares(nodo.getNodoIzq()) && todosPares(nodo.getNodoDer());
+        } else {
+            return false;
+        }
+        
+        
+        
+    }
+    
+    
+    public boolean sonIGuales(Arbol a, Arbol b)
+    {
+      return iguales(a.raiz, b.raiz);   
+    }
+    
+    public boolean iguales(NodoArbol a, NodoArbol b)
+    {
+        /* Si la raiz de ambos es nula estan vacios */
+        if (a==null&&b==null)
+        {
+            return true;
+        } else if (a.getDato()==b.getDato())
+        {
+            return iguales(a.getNodoIzq(), b.getNodoIzq()) && iguales(a.getNodoDer(), b.getNodoDer());
+        } else 
+        {
+            return false;
+        }
+    }
+    
+    public Arbol clonarArbol(Arbol a)
+    {
+        Arbol copia = new Arbol();
+        /* Si el arbol no es vacio*/
+        if (a.raiz !=null)
+        {
+            copia.setRaiz(clon(a.getRaiz()));
+        }
+        
+        return copia;
+    }
+    
+    /* Si a no es nulo hacemos la recursiva por cada nodo y sus hijos para clonarlos*/
+    public NodoArbol clon(NodoArbol a)
+    {
+        if (a==null)
+        {
+            return null;
+        } else 
+        {
+            NodoArbol nuevo= new NodoArbol(a.getDato());
+            nuevo.setNodoDer(clon(a.getNodoDer()));
+            nuevo.setNodoIzq(clon(a.getNodoIzq()));
+            return nuevo;
+        }
+    }
+    
+    public boolean esVacio()
+    {
+        return raiz == null;
+    }
+    
+    public boolean esEquilibrado(NodoArbol a)
+    {
+        if (this.esVacio())
+        {
+            return true;
+        } else {
+            
+       return (Math.abs(this.altura(a.getNodoIzq()) - this.altura(a.getNodoDer()))) >=1 && esEquilibrado(a.getNodoDer()) && esEquilibrado(a.getNodoIzq());
+
+            
+            
+        }
+    }
 }
