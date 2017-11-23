@@ -50,12 +50,12 @@ public class PruebasArbol {
         Arbol a = this.generarArbol();
         
         boolean existeRaiz = a.pertenece(50);
-        boolean existeHojaIz = a.pertenece(30);
-        boolean existeNodoDer = a.pertenece(59);
+       boolean existeHojaIz = a.pertenece(30);
+       boolean existeNodoDer = a.pertenece(59);
         
        
         Assert.assertTrue(existeHojaIz);
-        Assert.assertTrue(existeNodoDer);
+       Assert.assertTrue(existeNodoDer);
         Assert.assertTrue(existeRaiz);
     }
     
@@ -78,7 +78,7 @@ public class PruebasArbol {
     @Test
     public void buscar(){
         Arbol a = generarArbol();
-        NodoArbol nodo = a.buscar(a.getRaiz(), 50);
+        NodoArbol nodo = a.buscar(a.getRaiz(), 60);
         
         Assert.assertNotNull(nodo);
         
@@ -156,5 +156,14 @@ public class PruebasArbol {
         
           boolean iguales = a.sonIGuales(a, b);
         Assert.assertTrue(iguales);
+    }
+    
+    @Test
+    public void esEquilibrado()
+    {
+        Arbol a =generarArbol();
+        boolean equilibrado = a.esEquilibrado(a.getRaiz());
+        
+        //Assert.assertTrue(equilibrado);
     }
 }

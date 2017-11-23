@@ -311,8 +311,8 @@ public class GrafoLista {
 
         /* Comenzamos posicionandonos en origen, entonces, primero en el vector
         de predecesores en la posiicon origen ponemos -1 y en el vector de costos
-        posicion otigen ponemos cero, eso es por que el origen no tiene prdecesor
-        y el costo de llegar a si ismo es cero, asimosmo ponemos en el vector de
+        posicion origen ponemos cero, eso es por que el origen no tiene prdecesor
+        y el costo de llegar a si mismo es cero, asimosmo ponemos en el vector de
         visitados en la posiion origen TRUE*/
         predec[origen] = -1;
         costos[origen] = 0;
@@ -451,46 +451,13 @@ public class GrafoLista {
         return this.listaAdyacencias[a].pertenece(b);
     }
 
-    /* Metodo iterativo NO FUNCIONA BIEN hay que correjirlo*/
-    public void buscarDFS(Punto p) {
-
-        int resultado[] = new int[puntos.length];
-
-        /* Obtengo una pila vacia */
-        Pila pila = new Pila();
-
-        /* Meter el primer nodo en la pila */
-        NodoPila nodo = new NodoPila(puntos[buscarIndice(p)]);
-        //NodoPila nodo = new NodoPila(puntos[2]);
-        pila.push(nodo);
-
-        while (pila.estaVacia() == false) {
-            Punto puntoVisitado = pila.cima().getDato();
-            pila.sacar();
-
-            if (puntoVisitado.isVisitado() == false) {
-                puntoVisitado.setVisitado(true);
-                System.out.println("Visitamos el punto :" + puntoVisitado.getNombre());
-
-                /* Adjunto a la pila los nodos adyacente del nodo tomado */
-                for (int i = 1; i < this.listaAdyacencias[buscarIndice(puntoVisitado)].getCantidad(); i++) {
-
-                    /* Obtengo el punto por el indice de la lista */
-                    Punto nuevoPunto = buscarPunto(i);
-                    System.out.println("Adyacente -->" + nuevoPunto.getNombre());
-                    pila.push(new NodoPila(nuevoPunto));
-
-                }
-
-            }
-        }
-
-    }
+  
 
     /* Metodo rcursivo , funciona OK*/
     public void buscarDFS2(Punto p) {
 
         System.out.println(p.getNombre());
+        p.setVisitado(true);
         ListaAdy lista = this.listaAdyacencias[buscarIndice(p)];
         
         /* Recorro la lista de nodos desde el inicio */
@@ -514,6 +481,16 @@ public class GrafoLista {
             
         }
     
-    
+    public void buscarDFSV3()
+    {
+        
+        for (int i=0; i< cantidadActual; i++)
+        {
+            if(!puntos[i].isVisitado())
+            {
+                buscarDFS2(puntos[i]);
+            }
+        }
+    }
    
 }

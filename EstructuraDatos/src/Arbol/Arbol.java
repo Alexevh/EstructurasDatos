@@ -6,28 +6,21 @@ package Arbol;
 /**
  *
  * @author Alexev
- * 
- * 
+ *
+ *
  * Este es un arbol ABB o arbol binario de busqueda, voy a implementar la mayor
- * cantidad de metodos posibles tratando de que sea lo mas generico y reutilizable
- * 
+ * cantidad de metodos posibles tratando de que sea lo mas generico y
+ * reutilizable
+ *
  * Lista de metodos:
- * 
- * 1. Insertar (usa la 2)
- * 2. InsertarElemento - Inserta un eleento en el arbol
- * 3. Pertenece - saber si un elemento esta en el arbol
- * 4. Listar ascendente
- * 5. BorrarMinimo
- * 6. Buscar
- * 7. CantidadHojas
- * 8. Altura
- * 9. Borrar Elementos
- * 10. CantidadNodos
- * 11. TodosPares - saber si todos los elementos del arbol son pares
- * 12. soniguales - saber si dado dos arboles son iguales
- * 13. Clonar arbol
+ *
+ * 1. Insertar (usa la 2) 2. InsertarElemento - Inserta un eleento en el arbol
+ * 3. Pertenece - saber si un elemento esta en el arbol 4. Listar ascendente 5.
+ * BorrarMinimo 6. Buscar 7. CantidadHojas 8. Altura 9. Borrar Elementos 10.
+ * CantidadNodos 11. TodosPares - saber si todos los elementos del arbol son
+ * pares 12. soniguales - saber si dado dos arboles son iguales 13. Clonar arbol
  * 14. Esqeuilibrado - saber si un arbol esta equilibrado
- * 
+ *
  */
 public class Arbol {
 
@@ -94,7 +87,8 @@ public class Arbol {
     
      */
     private void insertarElemento(int x, NodoArbol n) {
-        /* Si el valor es mayor a X */
+        /* Si el valor del nodo N que en la priemra iteracion sla raiz es mayor
+        que el nuevo elemento, entonces el nuevo es menor y va ala izquierda*/
         if (n.getDato() > x) {
             /* Nos fijamos si el nodo izquierdo esta vacio, si eso es asi 
             entonces ponemos en el nodo izquiero el nuevo nodo*/
@@ -169,7 +163,7 @@ public class Arbol {
     
     Si el nodo es null hacemos un return
     
-    EN caso contrario ejecutamosla funcion dandole comonodo el izquierdo, luego
+    EN caso contrario ejecutamosla funcion dandole como nodo el izquierdo, luego
     hacemos un print del dato y luego ejecutamos la funcion con el derecho.
     
     El algoritmo no parece gran cosa, pero es una forma de demostrar como podemos
@@ -217,7 +211,7 @@ public class Arbol {
     Si el nodo izquierdo ya era null regersamos el nodo derecho como uevo valor 
     de A
     
-    */
+     */
     private NodoArbol eliminarMin(NodoArbol a) {
         if (a == null) {
             return a;
@@ -231,12 +225,12 @@ public class Arbol {
         }
 
     }
-    
+
     /* Metodo axuliar para buscar un elemtno con una firma*/
-      private NodoArbol buscar(int elemento) {
+    private NodoArbol buscar(int elemento) {
         return buscar(raiz, elemento);
     }
-    
+
     /* Buscar un nodo en el arbol*/
     public NodoArbol buscar(NodoArbol a, int dato) {
 
@@ -245,7 +239,7 @@ public class Arbol {
         if (a == null) {
             return a;
         }
-        if (a.getDato()==dato) {
+        if (a.getDato() == dato) {
             return a;
 
         }
@@ -278,7 +272,14 @@ public class Arbol {
         hasta que el retrno sea null, si el retorno es null enonces lo busca en la
         derecha para lo cual hace lo mismo que a la izquierda
         
-        */
+        Casos base  
+        
+        if (a == null) 
+            return a;
+        if (a.getDato() == dato) 
+            return a;
+        
+         */
         NodoArbol retorno = buscar(a.getNodoIzq(), dato);
         if (retorno == null) {
             return buscar(a.getNodoDer(), dato);
@@ -287,14 +288,12 @@ public class Arbol {
         }
 
     }
-    
+
     /* Conocer la cantidad de hojas de un arbol */
-    public int cantHojas()
-    {
+    public int cantHojas() {
         return cantHojasRaiz(raiz);
     }
-    
-    
+
     /* El metodo va a contabilizar la cantidad de hojas a partir de un nodo
     normalmente lo vamos a llamar desde la raiz
     
@@ -317,28 +316,23 @@ public class Arbol {
     El derecho tiene un valor de 11, pero no tiene hijos, nos devuelve 1
     
     
-    */
-    public int cantHojasRaiz(NodoArbol nodo)
-    {
-        if (nodo==null)
-        {
+     */
+    public int cantHojasRaiz(NodoArbol nodo) {
+        if (nodo == null) {
             return 0;
-        } else if(nodo.getNodoIzq()==null)
-        {
-            return 1+cantHojasRaiz(nodo.getNodoDer());
+        } else if (nodo.getNodoIzq() == null) {
+            return 1 + cantHojasRaiz(nodo.getNodoDer());
         } else {
             return cantHojasRaiz(nodo.getNodoIzq()) + cantHojasRaiz(nodo.getNodoDer());
         }
-        
+
     }
-    
+
     /* Obtener la altura de un arbol */
-    public int altura()
-    {
+    public int altura() {
         return altura(raiz);
     }
-    
-    
+
     /* La recursiva funciona asi >
     
     El caso base es si el nodo == null devolvemos -1
@@ -361,258 +355,197 @@ public class Arbol {
     encuentra el null.
  
     
-    */
-    public int altura(NodoArbol nodo)
-    {
-        if (nodo==null)
-        {
+     */
+    public int altura(NodoArbol nodo) {
+        if (nodo == null) {
             return -1;
         } else {
             int altIzq = altura(nodo.getNodoIzq());
             int altDer = altura(nodo.getNodoDer());
-            
-            if (altIzq > altDer)
-            {
-                return altIzq+1;
+
+            if (altIzq > altDer) {
+                return altIzq + 1;
             } else {
-                return altDer +1;
+                return altDer + 1;
             }
         }
     }
-    
-  
+
     /* Metodo para eliminar un elemento
    Usamos dos metodos, uno para encontrar el elemtno a borra
     
-    */
-    
-         public boolean borrarElementoV2(int elem)
-    {
-    	NodoArbol auxiliar = raiz;
-    	NodoArbol padre = raiz;
-    	
-    	boolean esHijoIzq = true;
-    	
-    	while (auxiliar.getDato()!=elem)
-    	{
-    		padre = auxiliar;
-    		if (elem < auxiliar.getDato())
-    		{
-    			esHijoIzq = true;
-    			auxiliar=auxiliar.getNodoIzq();
-    		} else {
-    			esHijoIzq = false;
-    			auxiliar=auxiliar.getNodoDer();
-    		}
-    		
-    		if(auxiliar==null)
-    		{
-    			return false;
-    		}
-    	}
-    	
-    	/* El nodo es Hoja o unico nodo */
-    	if (auxiliar.getNodoIzq()==null && auxiliar.getNodoDer()==null)
-    	{
-    		if(auxiliar.getDato()==raiz.getDato())
-    		{
-    			raiz=null;
-    		} else if (esHijoIzq)
-    		{
-    			padre.setNodoIzq(null);
-    		} else {
-    			padre.setNodoDer(null);
-    		}
-    	} else if(auxiliar.getNodoDer()==null)
-    	{
-    		if(auxiliar==raiz)
-    		{
-    			raiz=auxiliar.getNodoIzq();
-    		} else if (esHijoIzq)
-    		{
-    			padre.setNodoIzq(auxiliar.getNodoIzq());
-    		} else 
-    		{
-    			padre.setNodoDer(auxiliar.getNodoIzq());
-    		}
-    	} else if (auxiliar.getNodoIzq()==null)
-    	{
-    		
-    		if(auxiliar==raiz)
-    		{
-    			raiz=auxiliar.getNodoDer();
-    		} else if (esHijoIzq)
-    		{
-    			padre.setNodoIzq(auxiliar.getNodoDer());
-    		} else 
-    		{
-    			padre.setNodoDer(auxiliar.getNodoDer());
-    		}
-    		
-    		
-    		
-    	} else {
-    		NodoArbol reemplazo = obtenerNodoReemplazo(auxiliar);
-    		if (auxiliar==raiz)
-    		{
-    			raiz=reemplazo;
-    		} else if(esHijoIzq)
-    		{
-    			padre.setNodoIzq(reemplazo);
-    		} else 
-    		{
-    			padre.setNodoDer(reemplazo);
-    		}
-    		
-    		reemplazo.setNodoIzq(auxiliar.getNodoIzq());
-    	}
-    	
-    	
-    	
-    	return true;
+     */
+    public boolean borrarElementoV2(int elem) {
+        NodoArbol auxiliar = raiz;
+        NodoArbol padre = raiz;
+
+        boolean esHijoIzq = true;
+
+        while (auxiliar.getDato() != elem) {
+            padre = auxiliar;
+            if (elem < auxiliar.getDato()) {
+                esHijoIzq = true;
+                auxiliar = auxiliar.getNodoIzq();
+            } else {
+                esHijoIzq = false;
+                auxiliar = auxiliar.getNodoDer();
+            }
+
+            if (auxiliar == null) {
+                return false;
+            }
+        }
+
+        /* El nodo es Hoja o unico nodo */
+        if (auxiliar.getNodoIzq() == null && auxiliar.getNodoDer() == null) {
+            if (auxiliar.getDato() == raiz.getDato()) {
+                raiz = null;
+            } else if (esHijoIzq) {
+                padre.setNodoIzq(null);
+            } else {
+                padre.setNodoDer(null);
+            }
+        } else if (auxiliar.getNodoDer() == null) {
+            if (auxiliar == raiz) {
+                raiz = auxiliar.getNodoIzq();
+            } else if (esHijoIzq) {
+                padre.setNodoIzq(auxiliar.getNodoIzq());
+            } else {
+                padre.setNodoDer(auxiliar.getNodoIzq());
+            }
+        } else if (auxiliar.getNodoIzq() == null) {
+
+            if (auxiliar == raiz) {
+                raiz = auxiliar.getNodoDer();
+            } else if (esHijoIzq) {
+                padre.setNodoIzq(auxiliar.getNodoDer());
+            } else {
+                padre.setNodoDer(auxiliar.getNodoDer());
+            }
+
+        } else {
+            NodoArbol reemplazo = obtenerNodoReemplazo(auxiliar);
+            if (auxiliar == raiz) {
+                raiz = reemplazo;
+            } else if (esHijoIzq) {
+                padre.setNodoIzq(reemplazo);
+            } else {
+                padre.setNodoDer(reemplazo);
+            }
+
+            reemplazo.setNodoIzq(auxiliar.getNodoIzq());
+        }
+
+        return true;
     }
-    
-    
-    public NodoArbol obtenerNodoReemplazo(NodoArbol nodo)
-    {
-    	NodoArbol reemplazarPadre = nodo;
-    	NodoArbol reemplazo = nodo;
-    	NodoArbol aux = nodo.getNodoDer();
-    	
-    	while(aux!=null)
-    	{
-    		reemplazarPadre = reemplazo;
-    		reemplazo = aux;
-    		aux = aux.getNodoIzq();
-    	}
-    	
-    	if (reemplazo!=nodo.getNodoDer())
-    	{
-    		reemplazarPadre.setNodoIzq(reemplazo.getNodoDer());
-    		reemplazo.setNodoDer(nodo.getNodoDer());
-    		
-    	}
-    	
-    	
-    	
-    	
-    	
-    	return reemplazo;
+
+    public NodoArbol obtenerNodoReemplazo(NodoArbol nodo) {
+        NodoArbol reemplazarPadre = nodo;
+        NodoArbol reemplazo = nodo;
+        NodoArbol aux = nodo.getNodoDer();
+
+        while (aux != null) {
+            reemplazarPadre = reemplazo;
+            reemplazo = aux;
+            aux = aux.getNodoIzq();
+        }
+
+        if (reemplazo != nodo.getNodoDer()) {
+            reemplazarPadre.setNodoIzq(reemplazo.getNodoDer());
+            reemplazo.setNodoDer(nodo.getNodoDer());
+
+        }
+
+        return reemplazo;
     }
-    
+
     /* Este metodo me va a contar los nodos del arbol , para ello voy a usar un
     metodo complementario mas general*/
-    public int cantidadNodos()
-    {
+    public int cantidadNodos() {
         return cantNodos(raiz);
     }
-    
+
     /* Este metodo que estoy usando para conat los nodos del arbol me sirve 
     tambien para contar todos losnodos de un subarbol dado un nodo raiz*/
-    public int cantNodos(NodoArbol nodo)
-    {
+    public int cantNodos(NodoArbol nodo) {
         /*Inicializo un contador*/
         int cont = 0;
-        
+
         /* Si el nodo es valido vamos a recorrer el arbol que sale a partir de el*/
-        if (nodo!=null)
-        {
-            cont+= cantNodos(nodo.getNodoIzq());
+        if (nodo != null) {
+            cont += cantNodos(nodo.getNodoIzq());
             cont++; //Sumo un nodo
             cont += cantNodos(nodo.getNodoDer());
         }
-        
-        
+
         /*Devuelvo el resultado*/
         return cont;
     }
-    
+
     /* Me devuelve el peso del arbol*/
-    public boolean todosPares()
-    {
+    public boolean todosPares() {
         return todosPares(raiz);
     }
-    
-    public boolean todosPares(NodoArbol nodo)
-    {
-        if (nodo==null)
-        {
+
+    public boolean todosPares(NodoArbol nodo) {
+        if (nodo == null) {
             return true;
-        } else if (nodo.getDato()%2==0)
-        {
+        } else if (nodo.getDato() % 2 == 0) {
             return todosPares(nodo.getNodoIzq()) && todosPares(nodo.getNodoDer());
         } else {
             return false;
         }
-        
-        
-        
+
     }
-    
-    
-    public boolean sonIGuales(Arbol a, Arbol b)
-    {
-      return iguales(a.raiz, b.raiz);   
+
+    public boolean sonIGuales(Arbol a, Arbol b) {
+        return iguales(a.raiz, b.raiz);
     }
-    
-    public boolean iguales(NodoArbol a, NodoArbol b)
-    {
+
+    public boolean iguales(NodoArbol a, NodoArbol b) {
         /* Si la raiz de ambos es nula estan vacios */
-        if (a==null&&b==null)
-        {
+        if (a == null && b == null) {
             return true;
-        } else if (a.getDato()==b.getDato())
-        {
+        } else if (a.getDato() == b.getDato()) {
             return iguales(a.getNodoIzq(), b.getNodoIzq()) && iguales(a.getNodoDer(), b.getNodoDer());
-        } else 
-        {
+        } else {
             return false;
         }
     }
-    
-    public Arbol clonarArbol(Arbol a)
-    {
+
+    public Arbol clonarArbol(Arbol a) {
         Arbol copia = new Arbol();
         /* Si el arbol no es vacio*/
-        if (a.raiz !=null)
-        {
+        if (a.raiz != null) {
             copia.setRaiz(clon(a.getRaiz()));
         }
-        
+
         return copia;
     }
-    
+
     /* Si a no es nulo hacemos la recursiva por cada nodo y sus hijos para clonarlos*/
-    public NodoArbol clon(NodoArbol a)
-    {
-        if (a==null)
-        {
+    public NodoArbol clon(NodoArbol a) {
+        if (a == null) {
             return null;
-        } else 
-        {
-            NodoArbol nuevo= new NodoArbol(a.getDato());
+        } else {
+            NodoArbol nuevo = new NodoArbol(a.getDato());
             nuevo.setNodoDer(clon(a.getNodoDer()));
             nuevo.setNodoIzq(clon(a.getNodoIzq()));
             return nuevo;
         }
     }
-    
-    public boolean esVacio()
-    {
+
+    public boolean esVacio() {
         return raiz == null;
     }
-    
-    public boolean esEquilibrado(NodoArbol a)
-    {
-        if (this.esVacio())
-        {
+
+    public boolean esEquilibrado(NodoArbol a) {
+        if (this.esVacio()) {
             return true;
         } else {
-            
-       return (Math.abs(this.altura(a.getNodoIzq()) - this.altura(a.getNodoDer()))) >=1 && esEquilibrado(a.getNodoDer()) && esEquilibrado(a.getNodoIzq());
 
-            
-            
+            return (Math.abs(this.altura(a.getNodoIzq()) - this.altura(a.getNodoDer()))) >= 1 && esEquilibrado(a.getNodoDer()) && esEquilibrado(a.getNodoIzq());
+
         }
     }
 }

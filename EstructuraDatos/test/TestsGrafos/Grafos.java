@@ -6,8 +6,10 @@
 package TestsGrafos;
 
 import Dominio.Punto;
+import Grafo.CaminosMinimos;
 import Grafo.GrafoLista;
 import Pila.Pila;
+import java.util.Arrays;
 import org.junit.Test;
 
 /**
@@ -16,37 +18,64 @@ import org.junit.Test;
  */
 public class Grafos {
     
+    public GrafoLista obtenerGrafo()
+    {
+         GrafoLista grafo = new GrafoLista(10);
+        Punto a = new Punto("A", 200.0, 150.0);
+        Punto b = new Punto("B", 200.0, 160.0);
+        Punto c = new Punto("C", 200.0, 170.0);
+        Punto d = new Punto("D", 200.0, 180.0);
+        Punto e = new Punto("E", 200.0, 151.0);
+        Punto f = new Punto("F", 200.0, 152.0);
+        Punto g = new Punto("G", 200.0, 153.0);
+
+        grafo.agregarPunto(a);
+        grafo.agregarPunto(b);
+        grafo.agregarPunto(c);
+        grafo.agregarPunto(d);
+        grafo.agregarPunto(e);
+        grafo.agregarPunto(f);
+        grafo.agregarPunto(g);
+        
+       grafo.agregarTramo(a, b, 100, false);
+       grafo.agregarTramo(a, c, 101, false);
+       grafo.agregarTramo(b, f, 102, false);
+       grafo.agregarTramo(c, d, 103, false);
+       grafo.agregarTramo(d, g, 105, false);
+       grafo.agregarTramo(f, g, 104, false);
+       grafo.agregarTramo(b, c, 10, false);
+       grafo.agregarTramo(f, e, 1, false);
+       grafo.agregarTramo(g, e, 100, false);
+       grafo.agregarTramo(b, d, 1, false);
+       return grafo;
+    }
+    
     @Test
     public void probarDFS()
     {
         
-        GrafoLista grafo = new GrafoLista(10);
-        Punto p1 = new Punto("A", 200.0, 150.0);
-        Punto p2 = new Punto("B", 200.0, 160.0);
-        Punto p3 = new Punto("C", 200.0, 170.0);
-        Punto p4 = new Punto("D", 200.0, 180.0);
-        Punto p5 = new Punto("E", 200.0, 151.0);
-        Punto p6 = new Punto("F", 200.0, 152.0);
-        Punto p7 = new Punto("G", 200.0, 153.0);
-
-        grafo.agregarPunto(p1);
-        grafo.agregarPunto(p2);
-        grafo.agregarPunto(p3);
-        grafo.agregarPunto(p4);
-        grafo.agregarPunto(p5);
-        grafo.agregarPunto(p6);
-        grafo.agregarPunto(p7);
-        
-       grafo.agregarTramo(p1, p2, 100, true);
-       grafo.agregarTramo(p1, p3, 101, true);
-       grafo.agregarTramo(p1, p4, 102, true);
-       grafo.agregarTramo(p4, p5, 103, true);
-       grafo.agregarTramo(p4, p6, 104, true);
-       grafo.agregarTramo(p2, p3, 105, true);
-       
-       grafo.buscarDFS2(p4);
+        GrafoLista g =obtenerGrafo();
+      Punto a = g.buscarPunto(0);
+      
+      for (int i=0; i< 7; i++)
+      {
+          g.getPuntos()[i].setVisitado(false);
+      }
+      
+       g.buscarDFS2(a);
 
         
+    }
+    
+    @Test
+    public void buscarCaminosMInimos()
+    {
+        GrafoLista g =obtenerGrafo();
+        Punto a = g.buscarPunto(3);
+        Punto b = g.buscarPunto(4);
+        
+        CaminosMinimos c = g.buscarCaminosMinimos(a, b);
+        System.out.println(c.resultadoOrdenadoInverso());
     }
     
     

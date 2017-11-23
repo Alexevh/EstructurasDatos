@@ -58,14 +58,37 @@ public class CaminosMinimos {
 	public ArrayList<Integer> resultadoOrdenadoInverso(){
 		
 		ArrayList<Integer> resInverso = new ArrayList();
+                
+                /* Comienzo a;adiendo el objetivo al que apunte */
 		resInverso.add(objetivo);
+                
+                /*Ahora voy a tener el predecesor de objetivo*/
 		int pre = predec[objetivo];
+                
+                /*Mientras el predecsor sea distinto de -1 o sea no soy el raiz del que salio */
 		while(pre!=-1) {
+                     
+                        /*Agrego al resultado el predecsor*/
 			resInverso.add(pre);
+                        /*Predecesor ahora es el predesor de pre*/
 			pre = predec[pre];
 		}
 		System.out.println("");
 		return resInverso;
+	}
+        
+        /* Obtuve una lista de caminos, su predecsor y el costo */
+        public ArrayList<Integer> resultadoOrdenado(){
+		
+		ArrayList<Integer> resultado = new ArrayList();
+		resultado.add(objetivo);
+		int pre = predec[objetivo];
+		while(pre!=-1) {
+			resultado.add(pre);
+			pre = predec[pre];
+		}
+		System.out.println("");
+		return resultado;
 	}
 	
 }
