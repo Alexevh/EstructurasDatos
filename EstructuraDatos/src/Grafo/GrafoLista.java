@@ -481,6 +481,7 @@ public class GrafoLista {
             
         }
     
+    /* Este aplica DFS al grafo depende del DFS del vertice*/
     public void buscarDFSV3()
     {
         
@@ -492,5 +493,56 @@ public class GrafoLista {
             }
         }
     }
+    
+    
+    /* BUscar BFS vertice*/
+    public void recorrerBFS(Punto p)
+    {
+        Cola cola = new Cola();
+        p.setVisitado(true);
+        cola.insertar(p);
+        
+        while (!cola.estaVacia())
+        {
+            NodoCola v = cola.quitar();
    
+            ListaAdy lista = this.listaAdyacencias[buscarIndice(v.getDato())];
+            NodoListaAdy nodo = lista.inicio;
+            System.out.println("Nodo: "+v.getDato().getNombre());
+           
+              /* Recorro la lista de nodos desde el inicio */
+            while(nodo!=null)
+        {
+             Punto p2 = puntos[nodo.destino];
+             
+              if (p2!=null && p2.isVisitado()==false)
+            {
+                p2.setVisitado(true);
+                cola.insertar(p2);
+               
+            }
+              
+                 nodo= nodo.sig;
+            
+        }
+       
+    }
+    
+   
+}
+
+    
+    /* Recorrer BGS el grafo */
+    public void recorrerBFS()
+    {
+        
+         for (int i=0; i< cantidadActual; i++)
+        {
+            if(!puntos[i].isVisitado())
+            {
+                recorrerBFS(puntos[i]);
+            }
+        }
+        
+    }
 }

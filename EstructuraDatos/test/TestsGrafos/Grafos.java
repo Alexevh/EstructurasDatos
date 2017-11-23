@@ -28,6 +28,7 @@ public class Grafos {
         Punto e = new Punto("E", 200.0, 151.0);
         Punto f = new Punto("F", 200.0, 152.0);
         Punto g = new Punto("G", 200.0, 153.0);
+        
 
         grafo.agregarPunto(a);
         grafo.agregarPunto(b);
@@ -51,10 +52,40 @@ public class Grafos {
     }
     
     @Test
+    public void probarBFS()
+    {
+        GrafoLista g =obtenerGrafo();
+        Punto z = new Punto("Z", 200.0, 222.0);
+        Punto y = new Punto("Y", 200.0, 223.0);
+        g.agregarPunto(y);
+        g.agregarPunto(z);
+        g.agregarTramo(g.buscarPunto(4), z, 10, false);
+        g.agregarTramo(g.buscarPunto(4), y, 100, false);
+        
+         for (int i=0; i< g.getCantidadActual(); i++)
+      {
+          g.getPuntos()[i].setVisitado(false);
+      }
+         
+      Punto a = g.buscarPunto(0);
+      
+     
+      
+       g.recorrerBFS(a);
+    }
+    
+    @Test
     public void probarDFS()
     {
         
         GrafoLista g =obtenerGrafo();
+        Punto z = new Punto("Z", 200.0, 222.0);
+        Punto y = new Punto("Y", 200.0, 223.0);
+        g.agregarPunto(y);
+        g.agregarPunto(z);
+        g.agregarTramo(g.buscarPunto(4), z, 10, false);
+        g.agregarTramo(g.buscarPunto(4), y, 100, false);
+        
       Punto a = g.buscarPunto(0);
       
       for (int i=0; i< 7; i++)
